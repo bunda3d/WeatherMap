@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherMap.UI", "WeatherMap.UI\WeatherMap.UI.csproj", "{710E854B-EA09-4863-920E-90D59FBBF465}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherMap.Core", "WeatherMap.Core\WeatherMap.Core.csproj", "{A75E098C-B5EC-4EC3-B242-9ACF900E1CA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherMap.Data", "WeatherMap.Data\WeatherMap.Data.csproj", "{9C668404-095E-4178-9413-8C5B24B5FC88}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{710E854B-EA09-4863-920E-90D59FBBF465}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{710E854B-EA09-4863-920E-90D59FBBF465}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{710E854B-EA09-4863-920E-90D59FBBF465}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{710E854B-EA09-4863-920E-90D59FBBF465}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A75E098C-B5EC-4EC3-B242-9ACF900E1CA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A75E098C-B5EC-4EC3-B242-9ACF900E1CA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A75E098C-B5EC-4EC3-B242-9ACF900E1CA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A75E098C-B5EC-4EC3-B242-9ACF900E1CA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C668404-095E-4178-9413-8C5B24B5FC88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C668404-095E-4178-9413-8C5B24B5FC88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C668404-095E-4178-9413-8C5B24B5FC88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C668404-095E-4178-9413-8C5B24B5FC88}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {91D950CC-B380-48DE-9474-8B917FCDAD33}
+	EndGlobalSection
+EndGlobal
