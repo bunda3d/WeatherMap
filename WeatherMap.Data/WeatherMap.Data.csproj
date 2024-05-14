@@ -68,6 +68,7 @@
       <DependentUpon>WeatherMapModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\LogExceptionsRepository.cs" />
     <Compile Include="Repositories\LogWebRequestsRepository.cs" />
     <Compile Include="WeatherMapModel.Context.cs">
       <AutoGen>True</AutoGen>

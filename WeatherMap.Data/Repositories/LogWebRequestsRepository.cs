@@ -5,7 +5,7 @@ namespace WeatherMap.Data.Repositories
 {
 	public class LogWebRequestsRepository
 	{
-		private WeatherMap_DEV _context;
+		private readonly WeatherMap_DEV _context;
 
 		public LogWebRequestsRepository()
 		{
@@ -23,7 +23,7 @@ namespace WeatherMap.Data.Repositories
 			}
 			catch (Exception)
 			{
-				throw;
+				//LogExceptionAsync(ex);
 			}
 		}
 	}

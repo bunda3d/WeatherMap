@@ -18,3 +18,27 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/* START of Stripe a DEFINITION LIST */
+/*        use CLASS="striped"        */
+
+dl.striped dd {
+  padding-bottom: 0.5em;  
+}
+
+dl.striped dd {
+  margin-bottom: 0; /* remove bottom margin of dd elements as they don't take background color correctly */
+}
+
+dl.striped dt:nth-of-type(odd),
+dl.striped dd:nth-of-type(odd) {
+  background-color: #f8f9fa; /* Light grey color */
+}
+
+dl.striped dt:nth-of-type(even),
+dl.striped dd:nth-of-type(even) {
+  background-color: #ffffff; /* White color */
+}
+
+/* END of Stripe a DEFINITION LIST */
+

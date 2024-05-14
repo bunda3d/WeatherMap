@@ -1,9 +1,24 @@
-﻿function initMap() {
-  let map = new google.maps.Map(document.getElementById('map'), {
+﻿var map; //important: define map as a global var
+
+function adjustMapCard() {
+  if ($('#currentConditionsCard').is(':visible')) {
+    // if currentConditions card is visible, set mapCard to take half the width
+    $('#mapCard').removeClass('col-12').addClass('col-md-6');
+    $('#map').css('min-height', '500px');
+  } else {
+    // if currentConditions card is hidden, set mapCard to full width
+    $('#mapCard').removeClass('col-md-6').addClass('col-12');
+    $('#map').css('min-height', '600px');
+  }
+}
+
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
     center: { lat: 40.251, lng: -95.489 },
     zoom: 3.5
   });
 
+  //map click listener
   google.maps.event.addListener(map, 'click', function (event) {
     debugger;
     var lat = event.latLng.lat();
@@ -21,8 +36,10 @@ function sendCoordinates(lat, lng) {
     success: function (response) {
       if (response.Status === "OK") {
         console.log(response);
+        debugger;
         $('#currentConditionsContainer').html(response.RenderedPartialViewHtml);
-        $('#currentConditionsCard').show(); 
+        $('#currentConditionsCard').show();
+        adjustMapCard(); //resize map when other cards are visible
         alertModal(response.Message, response.Status);
       } else {
         console.log(response);
@@ -34,29 +51,12 @@ function sendCoordinates(lat, lng) {
       alertModal('An error occurred while fetching weather data, please try again.', 'ERR');
     }
   });
-
-  //function mapDataToViewModel(hourlyForecasts, officeData) {
-  //  debugger;
-  //  $.ajax({
-  //    url: '/Home/MapDataToViewModel',
-  //    type: 'POST',
-  //    contentType: 'application/json',
-  //    data: { hourlyForecasts: hourlyForecasts, officeData: officeData },
-  //    success: function (viewModel) {
-  //      debugger;
-  //      console.log('returned hourlyForecasts, officeData to mapDataToViewModel ');
-  //      // Update UI with the viewModel?
-  //      $('#currentConditionsContainer').html(viewModel);
-  //    },
-  //    error: function (xhr, status, error) {
-  //      console.error('Error mapping data to view model:', error);
-  //    }
-  //  });
-  //}
-
-  //function updateForecastCards(forecastData) {
-  //  // Update Bootstrap cards with forecast data
-  //  debugger;
-  //  $('#currentConditions').text(forecastData.summary);
-  //}
 }
+
+// call adjustMapCard when window is resized to handle dynamic changes
+$(window).resize(adjustMapCard);
+
+// initial call to set correct widths on page loads
+$(document).ready(function () {
+  adjustMapCard();
+});
