@@ -36,8 +36,8 @@ namespace WeatherMap.UI.Models
 		public string GridY { get; set; }
 		public List<ForecastPeriodVM> ForecastPeriods { get; set; }
 
-		//must initialize the ForecastPeriods list in constructor of ExtendedForecastVM.
-		//This ensures it’s never null.
+		//must initialize the ForecastPeriods list in constructor of ExtendedForecastVM
+		//this ensures it’s never null, as that CAN make the app puke
 		public ExtendedForecastVM()
 		{
 			ForecastPeriods = new List<ForecastPeriodVM>();

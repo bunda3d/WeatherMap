@@ -23,7 +23,7 @@ namespace WeatherMap.UI.Controllers
 
 		public ActionResult Index()
 		{
-			//initially empty VM until map is clicked
+			//initially VM are empty until map is clicked
 			var allWeatherViewModel = new AllWeatherVM
 			{
 				CurrentConditions = new CurrentConditionsVM(),
@@ -56,7 +56,6 @@ namespace WeatherMap.UI.Controllers
 				{
 					HourlyViewHtml = hourlyHtmlContent,
 					ExtendedViewHtml = extendedHtmlContent,
-					//RenderedPartialViewHtml = htmlContent,
 					Status = "OK",
 					Message = $"You selected {officeData.properties.relativeLocation.properties.city}, {officeData.properties.relativeLocation.properties.state}."
 				});
@@ -77,13 +76,13 @@ namespace WeatherMap.UI.Controllers
 		{
 			try
 			{
-				//map properties from DTOs to ViewModels
+				//map properties from DTOs to ViewModels for Office Locations & Hourly Forecasts
 				var officeProps = officeData.properties;
 				var currentProps = hourlyForecasts.properties;
 				var hrlyPeriods = hourlyForecasts.properties.periods;
 				var currentPeriod = hrlyPeriods.FirstOrDefault(period => period.number == 1);
 
-				//CurrentConditionsVM needs only 1 period, ExtendedForecastVM needs a List<ForecastPeriodsVM>
+				//CurrentConditionsVM needs only 1 period, ExtendedForecastVM needs List<ForecastPeriodsVM>
 				var forecastPeriodVM = new ForecastPeriodVM
 				{
 					Number = currentPeriod.number,
@@ -133,7 +132,7 @@ namespace WeatherMap.UI.Controllers
 		{
 			try
 			{
-				//map properties from DTOs to ViewModels
+				//map properties from DTOs to ViewModels for Office Locations & EXTENDED Forecasts
 				var officeProps = officeData.properties;
 				var extendedProps = extendedForecasts.properties;
 				var extendPeriods = extendedForecasts.properties.periods;

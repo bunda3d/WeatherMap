@@ -1,4 +1,4 @@
-﻿var map; //important: define map as a global var
+﻿var map; //define map as a global var
 
 function adjustMapCard() {
   if ($('#currentConditionsCard').is(':visible')) {
@@ -23,7 +23,7 @@ function initMap() {
     debugger;
     var lat = event.latLng.lat();
     var lng = event.latLng.lng();
-    sendCoordinates(lat, lng); //call function to send coordinates
+    sendCoordinates(lat, lng); //call function to send coordinates to backend (HomeController)
   });
 }
 

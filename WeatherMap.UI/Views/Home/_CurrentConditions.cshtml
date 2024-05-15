@@ -2,7 +2,7 @@
 
 <div>
 
-	<dl class="row striped">
+	<dl class="row striped"> @*had to create DL list row striping CSS, doesn't exist in BootStrap like for tables*@
 		<dt class="col-5">
 			@Html.DisplayNameFor(model => model.City), @Html.DisplayNameFor(model => model.State)
 		</dt>
@@ -15,7 +15,6 @@
 		<dd class="col-7">
 			@Html.DisplayFor(model => model.Latitude), @Html.DisplayFor(model => model.Longitude)
 		</dd>
-
 		<dt class="col-5">
 			@Html.DisplayNameFor(model => model.Elevation)
 		</dt>
@@ -27,6 +26,7 @@
 	<div class="card mb-3 border-0" style="background-color: #f8f9fa;">
 		<div class="row g-0">
 			<div class="col-5">
+				@*when img from api is broken, insert local generic thumbnail "onerror"*@
 				<img src="@Html.DisplayFor(model => model.ForecastPeriod.Icon)" class="img-fluid rounded-start" onerror="this.onerror=null;this.src='@Url.Content("~/Content/img/icons/default.png")';" alt="Weather Icon">
 			</div>
 			<div class="col-7 card-body p-2">

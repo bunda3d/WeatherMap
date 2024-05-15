@@ -112,7 +112,7 @@ namespace WeatherMap.Core
 					baseUrl = await GetAppSettingFromDatabaseAsync(cacheKey);
 					CacheItemPolicy policy = new CacheItemPolicy
 					{
-						AbsoluteExpiration = DateTimeOffset.Now.AddHours(24)
+						AbsoluteExpiration = DateTimeOffset.Now.AddHours(24) 
 					};
 					Cache.Set(cacheKey, baseUrl, policy);
 				}

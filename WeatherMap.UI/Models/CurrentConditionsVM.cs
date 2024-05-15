@@ -22,6 +22,6 @@ namespace WeatherMap.UI.Models
 		public ForecastPeriodVM ForecastPeriod { get; set; }
 
 		//ExtendedForecastVM needs a List<> of ForecastPeriods
-		//public List<ForecastPeriodVM> ForecastPeriods { get; set; }
+		//CurrentConditionsVM takes only the 1st period
 	}
 }

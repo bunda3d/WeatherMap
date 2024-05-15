@@ -1,7 +1,8 @@
 ﻿@model WeatherMap.UI.Models.ExtendedForecastVM
 
+@*locational data blocks under Extended Forecast title*@
 <div>
-	<h2>Detailed Forecast </h2>
+	<h2>Extended Forecast </h2>
 	<h5 class="mb-3">
 		<span class="text-bg-success d-block pb-1">
 			&nbsp;
@@ -32,49 +33,73 @@
 		</span>
 	</h5>
 
+	@*Extended Forecast cards*@
+
 	<div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 g-4">
 		@foreach (var period in Model.ForecastPeriods)
 		{
-			//create div bg gradient depending on precip. chance
+			// Create div bg gradient depending on precip. chance
 			string bgClass;
 			int probabilityValue;
 			bool isParsed = int.TryParse(period.ProbabilityOfPrecipitation.TrimEnd('%'), out probabilityValue);
 			if (!isParsed)
 			{
-				// handle case where string would not parse
-				probabilityValue = 0; // default to 0 if parsing fails
+				probabilityValue = 0; // Default to 0 if parsing fails
 			}
 
 			if (probabilityValue == 0)
 			{
 				bgClass = "bg-precip-0";
 			}
+			else if (probabilityValue < 11)
+			{
+				bgClass = "bg-precip-10";
+			}
 			else if (probabilityValue < 21)
 			{
 				bgClass = "bg-precip-20";
+			}
+			else if (probabilityValue < 31)
+			{
+				bgClass = "bg-precip-30";
 			}
 			else if (probabilityValue < 41)
 			{
 				bgClass = "bg-precip-40";
 			}
+			else if (probabilityValue < 51)
+			{
+				bgClass = "bg-precip-50";
+			}
 			else if (probabilityValue < 61)
 			{
 				bgClass = "bg-precip-60";
 			}
+			else if (probabilityValue < 71)
+			{
+				bgClass = "bg-precip-70";
+			}
 			else if (probabilityValue < 81)
 			{
 				bgClass = "bg-precip-80";
+			}
+			else if (probabilityValue < 91)
+			{
+				bgClass = "bg-precip-90";
 			}
 			else
 			{
 				bgClass = "bg-precip-100";
 			}
 
+
 			<div class="col">
 				<div class="card h-100">
+					@*when img from api is broken, insert local generic thumbnail "onerror"*@
 					<img src="@period.Icon" class="card-img-top" onerror="this.onerror=null;this.src='@Url.Content("~/Content/img/icons/default.png")';" alt="Weather Icon">
 					<ul class="list-group list-group-flush">
 						<li class="list-group-item">
+							@*if IsDaytime=true, show 'High: Temperature', else 'Low: ...'*@
 							@if (period.IsDaytime)
 							{
 								<p class="fw-bold m-0 text-danger">High: @period.TemperatureF</p>
@@ -84,7 +109,7 @@
 								<p class="fw-bold m-0 text-primary">Low: @period.TemperatureF</p>
 							}
 						</li>
-						<li class="list-group-item @bgClass">
+						<li class="list-group-item @bgClass"> @*bgClass creates Precip linear gradient effect*@
 							<p class="fw-bold m-0">Precip: @period.ProbabilityOfPrecipitation</p>
 						</li>
 					</ul>

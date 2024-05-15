@@ -1,4 +1,6 @@
-﻿////Definitions:
+﻿// modal.js
+
+////Definitions:
 //SUC or OK = Success type
 //ERR or FAIL = Error type
 
@@ -19,7 +21,6 @@
 ////or just add the response variables to the call:
 //alertModal(response.Message, response.Status);
 
-// modal.js
 function alertModal(message, status) {
   // Set default messages based on status
   var defaultMessage = status === 'FAIL' ? 'Operation failed.' : 'Operation succeeded.';
@@ -49,7 +50,7 @@ function alertModal(message, status) {
           </div>
       </div>
   </div>
-  `;
+  `; // Don't really need x button since there's a "Close" btn or you can click anywhere off-modal to dismiss it.
 
   // Append modal HTML to the body
   $('body').append(modalHTML);
