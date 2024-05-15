@@ -1,44 +1,71 @@
 ﻿/* Set padding to keep content from hitting the edges */
 .body-content {
-    margin-top: 15px;
-    padding-left: 15px;
-    padding-right: 15px;
+	margin-top: 15px;
+	padding-left: 15px;
+	padding-right: 15px;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
+/* Override the default bootstrap behavior where horizontal description lists
+   will truncate terms that are too long to fit in the left column
 */
 .dl-horizontal dt {
-    white-space: normal;
+	white-space: normal;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
 textarea {
-    max-width: 280px;
+	max-width: 280px;
 }
 
-/* START of Stripe a DEFINITION LIST */
-/*        use CLASS="striped"        */
+/* START of Striped DEFINITION LIST */
+/*       use CLASS="striped"        */
 
 dl.striped dd {
-  padding-bottom: 0.5em;  
+	padding-bottom: 0.5em;
 }
 
 dl.striped dd {
-  margin-bottom: 0; /* remove bottom margin of dd elements as they don't take background color correctly */
+	margin-bottom: 0; /* remove bottom margin of dd elements as they don't take background color correctly */
 }
 
-dl.striped dt:nth-of-type(odd),
-dl.striped dd:nth-of-type(odd) {
-  background-color: #f8f9fa; /* Light grey color */
+	dl.striped dt:nth-of-type(odd),
+	dl.striped dd:nth-of-type(odd) {
+		background-color: #f8f9fa; /* Light grey color */
+	}
+
+	dl.striped dt:nth-of-type(even),
+	dl.striped dd:nth-of-type(even) {
+		background-color: #ffffff; /* White color */
+	}
+
+/* END of Striped DEFINITION LIST */
+
+/*    PRECIP div bg gradient: gets darker blue the higher chance of precip    */
+
+.bg-precip-0 {
+	background-image: linear-gradient(to left, #03cdff, white 0%);
 }
 
-dl.striped dt:nth-of-type(even),
-dl.striped dd:nth-of-type(even) {
-  background-color: #ffffff; /* White color */
+.bg-precip-20 {
+	background-image: linear-gradient(to left, #03cdff, white 20%);
 }
 
-/* END of Stripe a DEFINITION LIST */
+.bg-precip-40 {
+	background-image: linear-gradient(to left, #03cdff, white 40%);
+}
 
+.bg-precip-60 {
+	background-image: linear-gradient(to left, #03cdff, white 60%);
+}
+
+.bg-precip-80 {
+	background-image: linear-gradient(to left, #03cdff, white 80%);
+}
+
+.bg-precip-100 {
+	background-color: #03cdff;
+}
+
+/* END of PRECIP div bg gradient: gets darker blue the higher chance of precip */

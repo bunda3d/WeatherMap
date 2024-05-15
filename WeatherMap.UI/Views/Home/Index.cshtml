@@ -1,22 +1,10 @@
-﻿@model WeatherMap.UI.Models.CurrentConditionsVM
+﻿@model WeatherMap.UI.Models.AllWeatherVM
 @{
 	ViewBag.Title = "Home";
 }
 
 <main>
-	<section class="row g-3" aria-labelledby="currentLocalWeather">
-
-		<div class="col-md-6 h-100" id="currentConditionsCard" style="display: none;">
-			<div class="card p-0">
-				<div class="card-header">
-					<h5>Current Conditions</h5>
-					<p class="m-0">Your Weather Now</p>
-				</div>
-				<div class="card-body" id="currentConditionsContainer">
-					@Html.Partial("_CurrentConditions", Model)
-				</div>
-			</div>
-		</div>
+	<section class="row g-3 mb-4" aria-labelledby="currentLocalWeather">
 
 		<div class="col-12 h-100" id="mapCard">
 			<div class="card p-0 ">
@@ -28,6 +16,24 @@
 					<div id="map" style="width:100%; min-height:600px; height:100%"></div>
 				</div>
 			</div>
+		</div>
+
+		<div class="col-md-6 h-100" id="currentConditionsCard" style="display: none;">
+			<div class="card p-0">
+				<div class="card-header">
+					<h5>Current Conditions</h5>
+					<p class="m-0">Your Weather Now</p>
+				</div>
+				<div class="card-body" id="currentConditionsContainer">
+					@Html.Partial("_CurrentConditions", Model.CurrentConditions)
+				</div>
+			</div>
+		</div>
+
+	</section>
+	<section>
+		<div id="extendedForecastContainer" style="display: none;">
+			@Html.Partial("_ExtendedForecast", Model.ExtendedForecast)
 		</div>
 	</section>
 </main>

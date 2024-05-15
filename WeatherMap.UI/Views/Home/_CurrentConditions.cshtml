@@ -27,7 +27,7 @@
 	<div class="card mb-3 border-0" style="background-color: #f8f9fa;">
 		<div class="row g-0">
 			<div class="col-5">
-				<img src="@Html.DisplayFor(model => model.ForecastPeriod.Icon)" class="img-fluid rounded-start" alt="Weather Icon">
+				<img src="@Html.DisplayFor(model => model.ForecastPeriod.Icon)" class="img-fluid rounded-start" onerror="this.onerror=null;this.src='@Url.Content("~/Content/img/icons/default.png")';" alt="Weather Icon">
 			</div>
 			<div class="col-7 card-body p-2">
 				<p class="small m-0">@Html.DisplayNameFor(model => model.ForecastPeriod.TemperatureF)</p>

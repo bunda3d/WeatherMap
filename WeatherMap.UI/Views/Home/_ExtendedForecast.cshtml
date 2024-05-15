@@ -1,0 +1,102 @@
+﻿@model WeatherMap.UI.Models.ExtendedForecastVM
+
+<div>
+	<h2>Detailed Forecast </h2>
+	<h5 class="mb-3">
+		<span class="text-bg-success d-block pb-1">
+			&nbsp;
+			@Html.DisplayFor(model => model.City),
+			@Html.DisplayFor(model => model.State)
+			&nbsp;
+		</span>
+
+		<span class="text-bg-primary d-block pb-1">
+			&nbsp;
+			@Html.DisplayNameFor(model => model.RadarStation):
+			@Html.DisplayFor(model => model.RadarStation)
+			&nbsp;
+		</span>
+
+		<span class="text-bg-danger d-block pb-1">
+			&nbsp;
+			@Html.DisplayNameFor(model => model.GridID):
+			@Html.DisplayFor(model => model.GridID)
+			&nbsp;
+		</span>
+
+		<span class="text-bg-secondary d-block pb-1">
+			&nbsp;
+			@Html.DisplayNameFor(model => model.TimeZone):
+			@Html.DisplayFor(model => model.TimeZone)
+			&nbsp;
+		</span>
+	</h5>
+
+	<div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 g-4">
+		@foreach (var period in Model.ForecastPeriods)
+		{
+			//create div bg gradient depending on precip. chance
+			string bgClass;
+			int probabilityValue;
+			bool isParsed = int.TryParse(period.ProbabilityOfPrecipitation.TrimEnd('%'), out probabilityValue);
+			if (!isParsed)
+			{
+				// handle case where string would not parse
+				probabilityValue = 0; // default to 0 if parsing fails
+			}
+
+			if (probabilityValue == 0)
+			{
+				bgClass = "bg-precip-0";
+			}
+			else if (probabilityValue < 21)
+			{
+				bgClass = "bg-precip-20";
+			}
+			else if (probabilityValue < 41)
+			{
+				bgClass = "bg-precip-40";
+			}
+			else if (probabilityValue < 61)
+			{
+				bgClass = "bg-precip-60";
+			}
+			else if (probabilityValue < 81)
+			{
+				bgClass = "bg-precip-80";
+			}
+			else
+			{
+				bgClass = "bg-precip-100";
+			}
+
+			<div class="col">
+				<div class="card h-100">
+					<img src="@period.Icon" class="card-img-top" onerror="this.onerror=null;this.src='@Url.Content("~/Content/img/icons/default.png")';" alt="Weather Icon">
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item">
+							@if (period.IsDaytime)
+							{
+								<p class="fw-bold m-0 text-danger">High: @period.TemperatureF</p>
+							}
+							else
+							{
+								<p class="fw-bold m-0 text-primary">Low: @period.TemperatureF</p>
+							}
+						</li>
+						<li class="list-group-item @bgClass">
+							<p class="fw-bold m-0">Precip: @period.ProbabilityOfPrecipitation</p>
+						</li>
+					</ul>
+					<div class="card-body">
+						<h5 class="card-title">@period.Name</h5>
+						<p class="card-text small">@period.DetailedForecast</p>
+					</div>
+					<div class="card-footer">
+						<small class="text-muted text-center">@period.LastUpdate</small>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+</div>

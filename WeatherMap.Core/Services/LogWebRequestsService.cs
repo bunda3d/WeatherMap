@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using WeatherMap.Data;
+using WeatherMap.Data.Exceptions;
 using WeatherMap.Data.Repositories;
 
 namespace WeatherMap.Core
@@ -17,7 +18,12 @@ namespace WeatherMap.Core
 			_logExService = new LogExceptionsService();
 		}
 
-		public async Task LogRequestAsync(string url, HttpResponseMessage response, string requestBody, string userAgent)
+		public async Task LogRequestAsync(
+			string url,
+			HttpResponseMessage response,
+			string requestBody,
+			string userAgent
+		)
 		{
 			//map data to <LogsWebRequest> model from params/objects
 			try
@@ -34,7 +40,15 @@ namespace WeatherMap.Core
 					// set other properties as needed
 				};
 
-				await _repo.LogRequestAsync(logEntry);
+				bool isLogged = await _repo.LogRequestAsync(logEntry);
+				if (!isLogged)
+				{
+					throw new Exception("Failed to log web request. ");
+				}
+			}
+			catch (DataAccessException ex)
+			{
+				await _logExService.LogExceptionAsync(ex.InnerException);
 			}
 			catch (Exception ex)
 			{

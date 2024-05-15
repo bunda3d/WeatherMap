@@ -3,6 +3,8 @@ using Newtonsoft.Json;
 using System.Threading.Tasks;
 using WeatherMap.Core.DTOs;
 using System;
+using System.Runtime.Caching;
+using WeatherMap.Data.Repositories;
 
 namespace WeatherMap.Core
 {
@@ -10,13 +12,18 @@ namespace WeatherMap.Core
 	{
 		private LogWebRequestsService _logWebRequestsService;
 		private LogExceptionsService _logExService;
-		private const string BaseUrl = "https://api.weather.gov";
-		private const string UserAgent = "WeatherMap.com, contact@weathermap.com";
+		private AppSettingsRepository _settingsRepo;
+		private static readonly ObjectCache Cache = MemoryCache.Default;
+		private const string BaseUrlCacheKey = "apiBaseUrl_NWSforecasts";
+		private const string UserAgentCacheKey = "userAgent_NWS";
+		//private const string UserAgent = "WeatherMap.com, contact@weathermap.com";
+		//private const string BaseUrl = "https://api.weather.gov";
 
 		public WeatherService()
 		{
 			_logWebRequestsService = new LogWebRequestsService();
 			_logExService = new LogExceptionsService();
+			_settingsRepo = new AppSettingsRepository();
 		}
 
 		public async Task<(WeatherForecastsDTO.Rootobject, WeatherForecastsDTO.Rootobject, WeatherOfficeDTO.Rootobject)> GetForecastsAsync(double latitude, double longitude)
@@ -43,13 +50,15 @@ namespace WeatherMap.Core
 			{
 				using (var client = new HttpClient())
 				{
-					client.DefaultRequestHeaders.Add("User-Agent", $"({UserAgent})"); //required by API
+					var userAgent = await GetCachedAppSettingAsync(UserAgentCacheKey);
+					client.DefaultRequestHeaders.Add("User-Agent", $"({userAgent})"); //required by API
 
-					var locUrl = $"{BaseUrl}/points/{latitude},{longitude}";
+					var baseUrl = await GetCachedAppSettingAsync(BaseUrlCacheKey);
+					var locUrl = $"{baseUrl}/points/{latitude},{longitude}";
 					var locUrlResponse = await client.GetAsync(locUrl);
 					var locUrlContent = await locUrlResponse.Content.ReadAsStringAsync();
 
-					await _logWebRequestsService.LogRequestAsync(locUrl, locUrlResponse, locUrlContent, UserAgent);
+					await _logWebRequestsService.LogRequestAsync(locUrl, locUrlResponse, locUrlContent, userAgent);
 
 					var locData = JsonConvert.DeserializeObject<WeatherOfficeDTO.Rootobject>(locUrlContent);
 
@@ -69,13 +78,15 @@ namespace WeatherMap.Core
 			{
 				using (var client = new HttpClient())
 				{
-					client.DefaultRequestHeaders.Add("User-Agent", $"({UserAgent})"); //required by API
+					var userAgent = await GetCachedAppSettingAsync(UserAgentCacheKey);
+					client.DefaultRequestHeaders.Add("User-Agent", $"({userAgent})"); //required by API
 
-					var forecastUrl = $"{BaseUrl}/gridpoints/{office}/{gridX},{gridY}/forecast{hrly}";
+					var baseUrl = await GetCachedAppSettingAsync(BaseUrlCacheKey);
+					var forecastUrl = $"{baseUrl}/gridpoints/{office}/{gridX},{gridY}/forecast{hrly}";
 					var forecastResponse = await client.GetAsync(forecastUrl);
 					var forecastContent = await forecastResponse.Content.ReadAsStringAsync();
 
-					await _logWebRequestsService.LogRequestAsync(forecastUrl, forecastResponse, forecastContent, UserAgent);
+					await _logWebRequestsService.LogRequestAsync(forecastUrl, forecastResponse, forecastContent, userAgent);
 
 					var forecasts = JsonConvert.DeserializeObject<WeatherForecastsDTO.Rootobject>(forecastContent);
 
@@ -86,6 +97,45 @@ namespace WeatherMap.Core
 			{
 				await _logExService.LogExceptionAsync(ex);
 				throw; //rethrow ex after logging
+			}
+		}
+
+		public async Task<string> GetCachedAppSettingAsync(string cacheKey)
+		{
+			//caching so service does not query value every cycle
+			try
+			{
+				var baseUrl = Cache[cacheKey] as string; //check cache for value
+				if (baseUrl == null)
+				{
+					//if not in cache, retrieve from db and add it
+					baseUrl = await GetAppSettingFromDatabaseAsync(cacheKey);
+					CacheItemPolicy policy = new CacheItemPolicy
+					{
+						AbsoluteExpiration = DateTimeOffset.Now.AddHours(24)
+					};
+					Cache.Set(cacheKey, baseUrl, policy);
+				}
+				return baseUrl;
+			}
+			catch (Exception ex)
+			{
+				await _logExService.LogExceptionAsync(ex);
+				return null;
+			}
+		}
+
+		public async Task<string> GetAppSettingFromDatabaseAsync(string keyName)
+		{
+			try
+			{
+				string baseUrl = await _settingsRepo.GetAppSettingCodeByNameAsync(keyName);
+				return baseUrl;
+			}
+			catch (Exception ex)
+			{
+				await _logExService.LogExceptionAsync(ex);
+				return null;
 			}
 		}
 	}

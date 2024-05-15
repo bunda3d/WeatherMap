@@ -7,7 +7,11 @@ namespace WeatherMap.UI.Models
 	{
 		public string City { get; set; }
 		public string State { get; set; }
+
+		[Display(Name = "Time Zone")]
 		public string TimeZone { get; set; }
+
+		[Display(Name = "Radar Station")]
 		public string RadarStation { get; set; }
 
 		[Display(Name = "Lat")]
@@ -18,14 +22,25 @@ namespace WeatherMap.UI.Models
 
 		public string Elevation { get; set; }
 		public string LocationID { get; set; }
+
+		[Display(Name = "Forecast Office")]
 		public string ForecastOffice { get; set; }
+
+		[Display(Name = "Forecast Office Link")]
 		public string ForecastOfficeLink { get; set; }
+
+		[Display(Name = "County Warning Area")]
 		public string GridID { get; set; }
+
 		public string GridX { get; set; }
 		public string GridY { get; set; }
 		public List<ForecastPeriodVM> ForecastPeriods { get; set; }
 
-		//ExtendedForecastVM needs a List<> of ForecastPeriods
-		//public List<ForecastPeriodVM> ForecastPeriods { get; set; }
+		//must initialize the ForecastPeriods list in constructor of ExtendedForecastVM.
+		//This ensures it’s never null.
+		public ExtendedForecastVM()
+		{
+			ForecastPeriods = new List<ForecastPeriodVM>();
+		}
 	}
 }

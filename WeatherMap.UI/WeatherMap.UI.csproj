@@ -161,7 +161,7 @@
     <Compile Include="Models\ExtendedForecastVM.cs" />
     <Compile Include="Models\CurrentConditionsVM.cs" />
     <Compile Include="Models\ForecastPeriodVM.cs" />
-    <Compile Include="Models\NWSLocalForecastsVM.cs" />
+    <Compile Include="Models\AllWeatherVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -220,6 +220,7 @@
     <Content Include="Views\Home\_CurrentConditions.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\_ExtendedForecast.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

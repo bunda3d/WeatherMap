@@ -7,6 +7,7 @@ namespace WeatherMap.UI.Models
 	{
 		public int Number { get; set; }
 		public string Name { get; set; }
+		public bool IsDaytime { get; set; }
 
 		[Display(Name = "Last Update")]
 		public DateTime LastUpdate { get; set; }

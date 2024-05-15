@@ -28,7 +28,6 @@ function initMap() {
 }
 
 function sendCoordinates(lat, lng) {
-  debugger;
   $.ajax({
     url: '/Home/GetWeatherDataAsync',
     type: 'POST',
@@ -37,9 +36,11 @@ function sendCoordinates(lat, lng) {
       if (response.Status === "OK") {
         console.log(response);
         debugger;
-        $('#currentConditionsContainer').html(response.RenderedPartialViewHtml);
+        $('#currentConditionsContainer').html(response.HourlyViewHtml);
         $('#currentConditionsCard').show();
-        adjustMapCard(); //resize map when other cards are visible
+        adjustMapCard(); //resize map when 'current' card is visible
+        $('#extendedForecastContainer').html(response.ExtendedViewHtml);
+        $('#extendedForecastContainer').show();
         alertModal(response.Message, response.Status);
       } else {
         console.log(response);

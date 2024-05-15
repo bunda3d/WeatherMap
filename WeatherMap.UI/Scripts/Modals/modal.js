@@ -33,7 +33,7 @@ function alertModal(message, status) {
   var modalHTML = `
   <div id="alertModal" class="modal" tabindex="-1" role="dialog" style="display:block; background-color: rgba(0,0,0,0.5);">
       <div class="modal-dialog" role="document">
-          <div class="modal-content" style="border-left: 5px solid ${modalColor};">
+          <div class="modal-content" style="border-left: 10px solid ${modalColor};">
               <div class="modal-header">
                   <h5 class="modal-title">${status === 'FAIL' ? 'Error' : 'Success'}</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
