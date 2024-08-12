@@ -1,4 +1,5 @@
 ﻿var map; //define map as a global var
+var lastLatLon = { lat: null, lng: null }; //store last clicked coordinates, ignore current click if same
 
 function adjustMapCard() {
   if ($('#currentConditionsCard').is(':visible')) {
@@ -20,9 +21,20 @@ function initMap() {
 
   //map click listener
   google.maps.event.addListener(map, 'click', function (event) {
-    debugger;
+    //debugger;
     var lat = event.latLng.lat();
     var lng = event.latLng.lng();
+
+    //check if clicked coordinates are same as last clicked coordinates, ignore click if true
+    if (lastLatLon.lat === lat && lastLatLon.lng === lng) {
+      console.log('Same coordinates clicked again, ignoring click.');
+      return; 
+    }
+
+    //update last clicked coordinates
+    lastLatLon.lat = lat;
+    lastLatLon.lng = lng;
+
     sendCoordinates(lat, lng); //call function to send coordinates to backend (HomeController)
   });
 }
@@ -35,7 +47,7 @@ function sendCoordinates(lat, lng) {
     success: function (response) {
       if (response.Status === "OK") {
         console.log(response);
-        debugger;
+        //debugger;
         $('#currentConditionsContainer').html(response.HourlyViewHtml);
         $('#currentConditionsCard').show();
         adjustMapCard(); //resize map when 'current' card is visible

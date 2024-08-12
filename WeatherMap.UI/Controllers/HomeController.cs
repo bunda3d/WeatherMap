@@ -76,6 +76,13 @@ namespace WeatherMap.UI.Controllers
 		{
 			try
 			{
+				//check response
+				if (hourlyForecasts.type.Contains("problem"))
+				{
+					//msg logs to db, UI shows generic error alert
+					throw new Exception("'Unexpected Error' response from weather API. Probably from choosing same location multiple times OR too many locations in a short timeframe. ");
+				}
+
 				//map properties from DTOs to ViewModels for Office Locations & Hourly Forecasts
 				var officeProps = officeData.properties;
 				var currentProps = hourlyForecasts.properties;
@@ -132,6 +139,13 @@ namespace WeatherMap.UI.Controllers
 		{
 			try
 			{
+				//check response
+				if (extendedForecasts.type.Contains("problem"))
+				{
+					//msg logs to db, UI shows generic error alert
+					throw new Exception("'Unexpected Error' response from weather API. Probably from choosing same location multiple times OR too many locations in a short timeframe. ");
+				}
+
 				//map properties from DTOs to ViewModels for Office Locations & EXTENDED Forecasts
 				var officeProps = officeData.properties;
 				var extendedProps = extendedForecasts.properties;
@@ -150,8 +164,8 @@ namespace WeatherMap.UI.Controllers
 						TemperatureF = $"{period.temperature}°F",
 						TemperatureC = $"{Math.Round((period.temperature - 32) / 1.8, 0)}°C",
 						ProbabilityOfPrecipitation = $"{period.probabilityOfPrecipitation?.value ?? 0}%",
-						Dewpoint = $"{Math.Round(period.dewpoint.value * 1.8 + 32, 0)}°F", //convert C to F
-						Humidity = $"{period.relativeHumidity.value}%",
+						Dewpoint = period.dewpoint?.value != null ? $"{Math.Round(period.dewpoint.value * 1.8 + 32, 0)}°F" : "N/A", //convert C to F
+						Humidity = period.relativeHumidity?.value != null ? $"{period.relativeHumidity.value}%" : "N/A",
 						WindSpeed = period.windSpeed,
 						WindDirection = period.windDirection,
 						Icon = period.icon.Replace("size=small", "size=large"),

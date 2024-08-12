@@ -92,7 +92,6 @@
 				bgClass = "bg-precip-100";
 			}
 
-
 			<div class="col">
 				<div class="card h-100">
 					@*when img from api is broken, insert local generic thumbnail "onerror"*@
@@ -109,7 +108,8 @@
 								<p class="fw-bold m-0 text-primary">Low: @period.TemperatureF</p>
 							}
 						</li>
-						<li class="list-group-item @bgClass"> @*bgClass creates Precip linear gradient effect*@
+						<li class="list-group-item @bgClass">
+							@*bgClass creates Precip linear gradient effect*@
 							<p class="fw-bold m-0">Precip: @period.ProbabilityOfPrecipitation</p>
 						</li>
 					</ul>
